@@ -12,7 +12,7 @@ type Props = {
   children: PreserveInterface => React.Node,
   setInitialDataValue: any,
   preserveAs: string,
-  url: string,
+  fetchFrom: string,
   render?: PreserveInterface => React.Node
 };
 
@@ -39,17 +39,17 @@ export default class Preserve extends React.Component<Props, State> {
   }
 
   async fetchData() {
-    const { url, preserveAs } = this.props;
+    const { fetchFrom, preserveAs } = this.props;
     const { data } = this.state;
 
     this.setState({ fetching: true });
 
-    if (!url) {
+    if (!fetchFrom) {
       throw new Error(`No URL to fetch from`);
     }
 
     try {
-      const response = await fetch(url);
+      const response = await fetch(fetchFrom);
       const json = await response.json();
 
       this.setState(

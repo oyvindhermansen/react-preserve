@@ -4,6 +4,8 @@ Preserves your data, and reduces the amount of unnecessary data fetching.
 
 ## Basic example
 
+> This example is using children as a function, but Preserve also provides a render prop.
+
 ```js
 import React, { Component } from 'react';
 import Preserve from 'react-preserve';
@@ -14,7 +16,7 @@ class App extends Component {
       <Preserve
         setInitialDataValue={[]}
         preserveAs={'posts'}
-        url={'https://jsonplaceholder.typicode.com/posts'}
+        fetchFrom={'https://jsonplaceholder.typicode.com/posts'}
       >
         {({ data, fetching, error }) => {
           return fetching ? (

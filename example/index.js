@@ -8,7 +8,7 @@ class App extends Component {
       <Preserve
         setInitialDataValue={[]}
         preserveAs={'posts'}
-        url={'https://jsonplaceholder.typicode.com/posts'}
+        fetchFrom={'https://jsonplaceholder.typicode.com/posts'}
       >
         {({ data, fetching, error }) => {
           return fetching ? (
