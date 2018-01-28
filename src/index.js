@@ -9,10 +9,11 @@ type PreserveInterface = {
 };
 
 type Props = {
-  children: PreserveInterface => React.Node,
   setInitialDataValue: any,
   preserveAs: string,
   fetchFrom: string,
+  storageHook?: (preserveAs: string, store: JSON) => void,
+  children: PreserveInterface => React.Node,
   render?: PreserveInterface => React.Node
 };
 
@@ -30,10 +31,18 @@ export default class Preserve extends React.Component<Props, State> {
   };
 
   componentDidMount() {
-    const { preserveAs } = this.props;
-    const isStored = localStorage.getItem(preserveAs);
+    const { preserveAs, storageHook } = this.props;
+    const store = localStorage.getItem(preserveAs);
 
-    if (!isStored) {
+    if (storageHook) {
+      if (typeof storageHook === 'function') {
+        if (store) {
+          storageHook(preserveAs, JSON.parse(store));
+        }
+      }
+    }
+
+    if (!store) {
       this.fetchData();
     }
   }

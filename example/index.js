@@ -3,14 +3,21 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 
 class App extends Component {
+  storageHook = (item, data) => {
+    console.log({
+      item,
+      data
+    });
+  };
+
   render() {
     return (
       <Preserve
+        storageHook={this.storageHook}
         setInitialDataValue={[]}
         preserveAs={'posts'}
         fetchFrom={'https://jsonplaceholder.typicode.com/posts'}
-      >
-        {({ data, fetching, error }) => {
+        render={({ data, fetching, error }) => {
           return fetching ? (
             <p>Loading....</p> // Will only happen once.
           ) : (
@@ -24,7 +31,7 @@ class App extends Component {
             })
           );
         }}
-      </Preserve>
+      />
     );
   }
 }

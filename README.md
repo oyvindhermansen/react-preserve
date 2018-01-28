@@ -14,6 +14,7 @@ class App extends Component {
   render() {
     return (
       <Preserve
+        storageHook={(item, storage) => {}}
         setInitialDataValue={[]}
         preserveAs={'posts'}
         fetchFrom={'https://jsonplaceholder.typicode.com/posts'}
