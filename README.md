@@ -18,8 +18,7 @@ class App extends Component {
         setInitialDataValue={[]}
         preserveAs={'posts'}
         fetchFrom={'https://jsonplaceholder.typicode.com/posts'}
-      >
-        {({ data, fetching, error }) => {
+        render={({ data, fetching, error }) => {
           return fetching ? (
             <p>Loading....</p> // Will only happen once.
           ) : (
@@ -33,7 +32,7 @@ class App extends Component {
             })
           );
         }}
-      </Preserve>
+      />
     );
   }
 }
