@@ -10,18 +10,16 @@
     "build:clean": "rimraf dist",
     "build:dist": "babel -d dist src --ignore '**/__tests__/**'",
     "build:flow": "flow-copy-source -v -i '**/__tests__/**' src dist",
-    "storybook": "start-storybook -p 9001 -c stories"
+    "dev": "parcel example/index.html"
   },
   "repository": "git@github.com:oyvindhermansen/react-preserve.git",
-  "keywords": ["react", "localStorage"],
+  "keywords": ["react", "localStorage", "render prop"],
   "author": "Øyvind Hermansen <oyvindher@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "babel-polyfill": "^6.26.0",
-    "lodash.isequal": "^4.5.0"
+    "babel-polyfill": "^6.26.0"
   },
   "devDependencies": {
-    "@storybook/react": "^3.4.0-alpha.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -30,6 +28,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "flow-copy-source": "^1.2.1",
+    "parcel-bundler": "^1.5.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "rimraf": "^2.6.2"

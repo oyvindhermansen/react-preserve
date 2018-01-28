@@ -1,12 +1,6 @@
-# React Preserve
-
-Preserves your data, and reduces the amount of unnecessary data fetching.
-
-## Basic example
-
-```js
+import Preserve from '../src/index';
 import React, { Component } from 'react';
-import Preserve from 'react-preserve';
+import { render } from 'react-dom';
 
 class App extends Component {
   render() {
@@ -22,7 +16,7 @@ class App extends Component {
           ) : (
             data.map(item => {
               return (
-                <div>
+                <div key={item.id}>
                   <h2>{item.title}</h2>
                   <p>{item.body}</p>
                 </div>
@@ -34,4 +28,5 @@ class App extends Component {
     );
   }
 }
-```
+
+render(<App />, document.getElementById('root'));

@@ -1,40 +1,95 @@
 // @flow
+import 'babel-polyfill';
 import * as React from 'react';
-import isEqual from 'lodash.isequal';
 
-type Props = {
-  children: (localStorageData: Storage) => React.Node,
-  item: string,
-  data: any
+type PreserveInterface = {
+  data: any | null,
+  fetching: boolean,
+  error: null
 };
 
-export default class Preserve extends React.Component<Props> {
+type Props = {
+  children: PreserveInterface => React.Node,
+  setInitialDataValue: any,
+  preserveAs: string,
+  url: string,
+  render?: PreserveInterface => React.Node
+};
+
+type State = {
+  data: any | null,
+  fetching: boolean,
+  error: null
+};
+
+export default class Preserve extends React.Component<Props, State> {
+  state = {
+    data: this.props.setInitialDataValue || null,
+    fetching: false,
+    error: null
+  };
+
   componentDidMount() {
-    if (typeof window === undefined) {
-      throw new Error(`Window is not available`);
+    const { preserveAs } = this.props;
+    const isStored = localStorage.getItem(preserveAs);
+
+    if (!isStored) {
+      this.fetchData();
     }
   }
 
-  componentWillReceiveProps(nextProps: Props) {
-    const { item, data } = this.props;
+  async fetchData() {
+    const { url, preserveAs } = this.props;
+    const { data } = this.state;
 
-    console.log('NEXT', nextProps);
+    this.setState({ fetching: true });
 
-    if (!isEqual(nextProps.data, data)) {
-      localStorage.setItem(item, JSON.stringify(nextProps.data));
+    if (!url) {
+      throw new Error(`No URL to fetch from`);
+    }
+
+    try {
+      const response = await fetch(url);
+      const json = await response.json();
+
+      this.setState(
+        {
+          fetching: false,
+          error: null,
+          data: json
+        },
+        () => {
+          if (response.ok && json) {
+            localStorage.setItem(preserveAs, JSON.stringify(json));
+          }
+        }
+      );
+    } catch (error) {
+      this.setState({
+        fetching: false,
+        error
+      });
     }
   }
 
   render() {
-    const { children, item } = this.props;
-    const storage = localStorage.getItem(item);
+    const { children, preserveAs, render } = this.props;
+    const { data, fetching, error } = this.state;
+    const storage = localStorage.getItem(preserveAs);
+    const dataToUse = storage ? JSON.parse(storage) : data;
 
-    if (storage === null || storage === undefined) {
-      return null;
+    if (render) {
+      return render({
+        data: dataToUse,
+        fetching,
+        error
+      });
     }
 
-    const localStorageData = JSON.parse(storage);
-
-    return children(localStorageData);
+    return children({
+      data: dataToUse,
+      fetching,
+      error
+    });
   }
 }

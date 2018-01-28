@@ -10,3 +10,4 @@ __tests__
 .gitignore
 webpack.config.babel.js
 webpack.config.production.babel.js
+.cache
