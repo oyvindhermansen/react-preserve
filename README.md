@@ -4,7 +4,7 @@ Preserves your data, and reduces the amount of unnecessary data fetching.
 
 ## Basic example
 
-> This example is using children as a function, but Preserve also provides a render prop.
+> This example is using a render prop, but Preserve also provides a children as a function.
 
 ```js
 import React, { Component } from 'react';
