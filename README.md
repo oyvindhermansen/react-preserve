@@ -8,7 +8,7 @@ Preserves your data, and reduces the amount of unnecessary data fetching.
 
 ```js
 import React, { Component } from 'react';
-// import Preserve from 'react-preserve'; NOT YET ON NPM
+import Preserve from 'react-preserve';
 
 class App extends Component {
   render() {

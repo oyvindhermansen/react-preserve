@@ -1,6 +1,6 @@
 {
   "name": "react-preserve",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Component that can preserve given data using localStorage",
   "main": "dist/index.js",
   "scripts": {
